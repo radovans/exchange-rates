@@ -18,6 +18,24 @@
         <java.version>21</java.version>
 
         <flyway.version>11.7.0</flyway.version>
+
+        <!-- Code style -->
+        <code-style.dir>${project.basedir}/code-check</code-style.dir>
+        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+        <checkstyle.version>10.23.0</checkstyle.version>
+        <checkstyle.config.location>${code-style.dir}/checkstyle/checkstyle.xml</checkstyle.config.location>
+        <checkstyle.suppressions.location>${code-style.dir}/checkstyle/checkstyle-suppressions.xml</checkstyle.suppressions.location>
+
+        <!-- Jacoco -->
+        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+
+        <!-- Spotbugs -->
+        <spotbugs.version>4.9.3</spotbugs.version>
+        <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
+        <spotbugs.excludeFilterFile>${code-style.dir}/spotbugs/spotbugs-exclude.xml</spotbugs.excludeFilterFile>
+
+        <!-- PMD -->
+        <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -45,7 +63,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        Database migration tools -->
+        <!-- Database migration tools -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
@@ -96,6 +114,90 @@
                     <locations>
                         <location>filesystem:src/main/resources/db/migration</location>
                     </locations>
+                </configuration>
+            </plugin>
+
+            <!-- Code quality -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <consoleOutput>true</consoleOutput>
+                    <configLocation>${checkstyle.config.location}</configLocation>
+                </configuration>
+                <dependencies>
+                    <!-- Enforce usage of newer checkstyle engine, the plugin uses 6.18 by default -->
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- Code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <!-- Bugs detection -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>${spotbugs.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <excludeFilterFile>${spotbugs.excludeFilterFile}</excludeFilterFile>
+                    <htmlOutput>true</htmlOutput>
+                </configuration>
+            </plugin>
+
+            <!-- Bugs detection -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven-pmd-plugin.version}</version>
+                <configuration>
+                    <targetJdk>${java.version}</targetJdk>
+                    <includeTests>true</includeTests>
+                    <rulesets>
+                        <ruleset>rulesets/java/quickstart.xml</ruleset>
+                    </rulesets>
+                    <excludes>
+                        <exclude>**/generated/*.java</exclude>
+                    </excludes>
+                    <excludeRoots>
+                        <excludeRoot>target/generated-sources/annotations</excludeRoot>
+                        <excludeRoot>target/generated-test-sources/test-annotations</excludeRoot>
+                    </excludeRoots>
                 </configuration>
             </plugin>
         </plugins>
