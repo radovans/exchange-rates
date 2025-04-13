@@ -7,6 +7,7 @@ import cz.sinko.exchangerates.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User find(final long id) throws ResourceNotFoundException {
@@ -41,6 +44,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User createUser(final User user) {
         log.info("Creating user: '{}'", user);
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -59,7 +65,15 @@ public class UserServiceImpl implements UserService {
     public User updateUser(final long id, final User user) throws ResourceNotFoundException {
         log.info("Updating user with id: '{}', '{}'", id, user);
         final User existingUser = find(id);
-        existingUser.setName(user.getName());
+        if (user.getName() != null && !user.getName().isBlank()) {
+            existingUser.setName(user.getName());
+        }
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        if (user.getAuthorities() != null && !user.getAuthorities().isEmpty()) {
+            existingUser.setAuthorities(user.getAuthorities());
+        }
         return userRepository.save(existingUser);
     }
 }

@@ -2,11 +2,11 @@ package cz.sinko.exchangerates.configuration;
 
 import cz.sinko.exchangerates.api.ApiError;
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
-import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -64,10 +64,12 @@ public class GlobalExceptionHandler {
         if (ex instanceof ResourceNotFoundException exception) {
             final HttpStatus status = HttpStatus.NOT_FOUND;
             return handleResourceNotFoundException(exception, headers, status, request);
-
         } else if (ex instanceof MethodArgumentNotValidException exception) {
             final HttpStatus status = HttpStatus.BAD_REQUEST;
             return handleMethodArgumentNotValidException(exception, headers, status, request);
+        } else if (ex instanceof AccessDeniedException exception) {
+            final HttpStatus status = HttpStatus.FORBIDDEN;
+            return handleAccessDeniedException(exception, headers, status, request);
         } else {
             if (log.isWarnEnabled()) {
                 log.warn("Unknown exception type: {}", ex.getClass().getName());
@@ -78,10 +80,20 @@ public class GlobalExceptionHandler {
         }
     }
 
+    private ResponseEntity<ApiError> handleAccessDeniedException(final AccessDeniedException exception,
+                                                                 final HttpHeaders headers,
+                                                                 final HttpStatus status,
+                                                                 final WebRequest request) {
+
+        final List<String> errors = Collections.singletonList(exception.getMessage());
+        return handleExceptionInternal(exception, new ApiError(errors), headers, status, request);
+    }
+
     private ResponseEntity<ApiError> handleResourceNotFoundException(final ResourceNotFoundException ex,
                                                                      final HttpHeaders headers,
                                                                      final HttpStatus status,
                                                                      final WebRequest request) {
+
         final List<String> errors = Collections.singletonList(ex.getMessage());
         final String stackTrace = getStackTrace(ex);
         return handleExceptionInternal(ex, new ApiError(errors, stackTrace), headers, status, request);
@@ -91,6 +103,7 @@ public class GlobalExceptionHandler {
                                                                            final HttpHeaders headers,
                                                                            final HttpStatus status,
                                                                            final WebRequest request) {
+
         final List<String> errorMessages = new ArrayList<>();
         for (ObjectError objectError : ex.getAllErrors()) {
             errorMessages.add(objectError.getDefaultMessage());
@@ -98,9 +111,12 @@ public class GlobalExceptionHandler {
         return handleExceptionInternal(ex, new ApiError(errorMessages), headers, status, request);
     }
 
-    private ResponseEntity<ApiError> handleExceptionInternal(final Exception ex, @Nullable final ApiError body,
-                                                             final HttpHeaders headers, final HttpStatus status,
+    private ResponseEntity<ApiError> handleExceptionInternal(final Exception ex,
+                                                             final ApiError body,
+                                                             final HttpHeaders headers,
+                                                             final HttpStatus status,
                                                              final WebRequest request) {
+
         if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
             request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
         }

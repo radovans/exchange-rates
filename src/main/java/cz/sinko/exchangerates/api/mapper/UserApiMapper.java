@@ -6,6 +6,7 @@ import cz.sinko.exchangerates.api.dto.response.user.UserResponse;
 import cz.sinko.exchangerates.service.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -59,6 +60,9 @@ public interface UserApiMapper {
      * @param source userResponse
      * @return userDto
      */
-    @Mapping(target = "id", ignore = true)
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "username", ignore = true)
+    })
     UserDto fromRequest(UserUpdateRequest source);
 }

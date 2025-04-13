@@ -6,11 +6,14 @@ import cz.sinko.exchangerates.api.dto.response.user.UserResponse;
 import cz.sinko.exchangerates.api.mapper.UserApiMapper;
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
 import cz.sinko.exchangerates.facade.UserFacade;
+import cz.sinko.exchangerates.repository.entity.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,12 +77,16 @@ public class UserController {
     /**
      * Delete user by id.
      *
-     * @param id the id of the user to delete
+     * @param loggedUser the logged user
+     * @param id         the id of the user to delete
      * @return void
      * @throws ResourceNotFoundException if user not found
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable final long id) throws ResourceNotFoundException {
+    public ResponseEntity<Void> deleteUser(@AuthenticationPrincipal final User loggedUser,
+                                           @PathVariable final long id) throws ResourceNotFoundException {
+
         log.info("Call deleteUser with id '{}'", id);
         userFacade.deleteUser(id);
         return ResponseEntity.ok().build();
@@ -88,18 +95,21 @@ public class UserController {
     /**
      * Update user by id.
      *
+     * @param loggedUser        the logged user
      * @param id                the id of the user to update
      * @param userUpdateRequest the user update request
      * @return the updated user
      * @throws ResourceNotFoundException if user not found
      */
-    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PatchMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(
+            @AuthenticationPrincipal final User loggedUser,
             @PathVariable final long id,
             @RequestBody @Valid final UserUpdateRequest userUpdateRequest) throws ResourceNotFoundException {
 
         log.info("Call updateUser with id '{}' and request '{}'", id, userUpdateRequest);
-        return ResponseEntity.ok().body(userApiMapper.toResponse(
-                userFacade.updateUser(id, userApiMapper.fromRequest(userUpdateRequest))));
+        return ResponseEntity.ok().body(userApiMapper.toResponse(userFacade.updateUser(loggedUser, id,
+                userApiMapper.fromRequest(userUpdateRequest))));
     }
 }

@@ -1,6 +1,7 @@
 package cz.sinko.exchangerates.facade;
 
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
+import cz.sinko.exchangerates.repository.entity.User;
 import cz.sinko.exchangerates.service.dto.UserDto;
 
 import java.util.List;
@@ -46,10 +47,11 @@ public interface UserFacade {
     /**
      * Update User by id.
      *
+     * @param loggedUser User who is logged in
      * @param id         User id
      * @param userDto    User DTO
      * @return updated User DTO
      * @throws ResourceNotFoundException if User was not found
      */
-    UserDto updateUser(long id, UserDto userDto) throws ResourceNotFoundException;
+    UserDto updateUser(User loggedUser, long id, UserDto userDto) throws ResourceNotFoundException;
 }
