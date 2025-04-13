@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,4 +24,6 @@ public class ApiError {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String stackTrace;
+
+    private LocalDateTime timestamp = LocalDateTime.now();
 }

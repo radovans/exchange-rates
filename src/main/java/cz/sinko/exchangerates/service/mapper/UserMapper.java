@@ -1,11 +1,16 @@
 package cz.sinko.exchangerates.service.mapper;
 
+import cz.sinko.exchangerates.repository.entity.Role;
 import cz.sinko.exchangerates.repository.entity.User;
-import cz.sinko.exchangerates.service.dto.UserDto;
+import cz.sinko.exchangerates.service.dto.user.UserDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Set;
+
+import static cz.sinko.exchangerates.configuration.Constants.ADMIN_ROLE;
 
 /**
  * Mapper between User and UserDto.
@@ -30,6 +35,7 @@ public interface UserMapper {
      * @param source user
      * @return userDto
      */
+    @Mapping(target = "admin", expression = "java(mapAuthoritiesToAdmin(source.getAuthorities()))")
     UserDto toUserDto(User source);
 
     /**
@@ -38,6 +44,7 @@ public interface UserMapper {
      * @param source userDto
      * @return user
      */
+    @Mapping(target = "authorities", ignore = true)
     User toUser(UserDto source);
 
     /**
@@ -55,4 +62,15 @@ public interface UserMapper {
      * @return list of users
      */
     List<User> toUserDtos(List<UserDto> userDtos);
+
+    /**
+     * Custom mapping to set the admin field in UserDto based on authorities.
+     *
+     * @param authorities set of roles
+     * @return true if ADMIN_ROLE is present, false otherwise
+     */
+    default boolean mapAuthoritiesToAdmin(Set<Role> authorities) {
+        return authorities != null && authorities.stream()
+                .anyMatch(role -> ADMIN_ROLE.equals(role.getAuthority()));
+    }
 }

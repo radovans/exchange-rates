@@ -1,10 +1,12 @@
 # Exchange rates application
 
 ## Prerequisites
+
 - Java 21
 - Docker
 
 ## How to run
+
 1. Clone the repository
 2. Start PostgreSQL database in the background
     ```bash
@@ -20,6 +22,7 @@
 5. Access the application at `http://localhost:8080`
 
 ## Additional Information
+
 - Run tests with `mvn clean test`
 - Run checkstyle with `mvn checkstyle:checkstyle` - report will be generated in `/target/reports/checkstyle.html`
     ```bash

@@ -1,5 +1,6 @@
 package cz.sinko.exchangerates.service;
 
+import cz.sinko.exchangerates.configuration.exception.AlreadyExistsException;
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
 import cz.sinko.exchangerates.repository.entity.User;
 import org.springframework.data.domain.Sort;
@@ -36,7 +37,7 @@ public interface UserService {
      * @param user User
      * @return created User
      */
-    User createUser(User user);
+    User createUser(User user) throws AlreadyExistsException;
 
     /**
      * Delete User by id.
