@@ -1,0 +1,16 @@
+<configuration>
+    <!-- Console Appender with Human-Readable, Colorized Format -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %red(%d{ISO8601}) %highlight(%-5level) [%magenta(%t)] %yellow(%logger{36}): %msg%n%throwable
+            </Pattern>
+            <charset>UTF-8</charset>
+        </layout>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+    </root>
+</configuration>

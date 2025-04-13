@@ -5,6 +5,8 @@ import cz.sinko.exchangerates.service.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * Mapper between User and UserDto.
  *
@@ -29,4 +31,28 @@ public interface UserMapper {
      * @return userDto
      */
     UserDto toUserDto(User source);
+
+    /**
+     * Map UserDto to User
+     *
+     * @param source userDto
+     * @return user
+     */
+    User toUser(UserDto source);
+
+    /**
+     * Map list of Users to list of UserDtos.
+     *
+     * @param users list of users
+     * @return list of userDtos
+     */
+    List<UserDto> toUsers(List<User> users);
+
+    /**
+     * Map list of UserDtos to list of Users.
+     *
+     * @param userDtos list of userDtos
+     * @return list of users
+     */
+    List<User> toUserDtos(List<UserDto> userDtos);
 }

@@ -30,7 +30,7 @@
     <!-- Sets a limit for the maximum allowed line length -->
     <module name="LineLength">
         <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://|@see|HeadURL" />
-        <property name="max" value="380"/>
+        <property name="max" value="120"/>
     </module>
 
     <module name="TreeWalker">
