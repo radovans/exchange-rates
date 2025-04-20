@@ -29,3 +29,14 @@ perform currency conversions. The application is built using Spring Boot and mos
     ```bash
     open http://localhost:8080/swagger
     ```
+
+## Build information and status page
+- Build information is available at `http://localhost:8080/actuator/info`
+    ```bash
+    open http://localhost:8080/actuator/info
+    ```
+- Open status page and check if the application is running on the servers
+    ```bash
+    open status-page/status-page.html
+    ```
+- Metrics are available in raw form at `http://localhost:8080/actuator/metrics` (Prometheus)

@@ -41,6 +41,10 @@
     open target/reports/pmd.html
     ```
 
+- Project contains devtools for hot reload
+    - Changes will be automatically reloaded after saving the file and `Ctrl + F9` or `Cmd + F9` in IntelliJ
+
 ## Postman collection
+
 - Postman collection is available in the `api-test` directory.
-- Import environment and collections into Postman.
+    - Import environment and collections into Postman.
