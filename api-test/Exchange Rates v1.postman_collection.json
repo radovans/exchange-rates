@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "779cf487-6a3b-448b-9b88-7a2eff75a2bd",
+		"name": "Exchange Rates v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2291040",
+		"_collection_link": "https://gold-shadow-538393.postman.co/workspace/morosystems~ce0bd2a8-bd07-42a8-b80a-372ae45a60ca/collection/2291040-779cf487-6a3b-448b-9b88-7a2eff75a2bd?action=share&source=collection_link&creator=2291040"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get non-existent user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}:{{port}}/actuator/health",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

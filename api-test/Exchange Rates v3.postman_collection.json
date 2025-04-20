@@ -1,0 +1,819 @@
+{
+	"info": {
+		"_postman_id": "9c08d4da-e926-45f2-ace5-30f2e753b040",
+		"name": "Exchange Rates v3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2291040",
+		"_collection_link": "https://gold-shadow-538393.postman.co/workspace/morosystems~ce0bd2a8-bd07-42a8-b80a-372ae45a60ca/collection/2291040-9c08d4da-e926-45f2-ace5-30f2e753b040?action=share&source=collection_link&creator=2291040"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get non-existent user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"dobby\",\n    \"password\": \"Password123\",\n    \"name\": \"Dobby\",\n    \"admin\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Multiple validation errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"eleanor2!\",\n    \"password\": \"pass\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Empty name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"eleanor\",\n    \"password\": \"Password123\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Empty username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Eleanor\",\n    \"password\": \"Password123\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not unique username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Bob Bob\",\n    \"username\": \"bob\",\n    \"password\": \"Password123\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Wrong name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"eleanor\",\n    \"name\": \"Eleanor 123\",\n    \"password\": \"Password123\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Weak password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"eleanor\",\n    \"name\": \"Eleanor\",\n    \"password\": \"pass\",\n    \"admin\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Create admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"Password123\",\n    \"name\": \"Admin\",\n    \"admin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "dobby",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"dobby\",\n    \"password\": \"Password123\",\n    \"name\": \"Dobby\",\n    \"admin\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update username",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"dobby2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update name",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Dobby is free\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update password",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"Password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update role",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"admin\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update another user",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"admin\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update User with Admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"dobby\",\n    \"password\": \"Password123\",\n    \"name\": \"Dobby is good boy\",\n    \"admin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Password123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete non-existent user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Exceptions",
+			"item": [
+				{
+					"name": "No resource",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Password123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/pokemon",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"pokemon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Method not allowed",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Denied",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bad Credentials",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "WrongPassword",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}:{{port}}/actuator/health",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

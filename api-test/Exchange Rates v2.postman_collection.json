@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "b2eaa8fd-10e7-4e6e-9994-fc1e91df3f5d",
+		"name": "Exchange Rates v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2291040",
+		"_collection_link": "https://gold-shadow-538393.postman.co/workspace/morosystems~ce0bd2a8-bd07-42a8-b80a-372ae45a60ca/collection/2291040-b2eaa8fd-10e7-4e6e-9994-fc1e91df3f5d?action=share&source=collection_link&creator=2291040"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get non-existent user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dobby\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Empty name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Wrong name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Dobby4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Long name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Adam\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Empty name",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Wrong name",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Adam4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Long name",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Update non-existent user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Dobby\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}:{{port}}/users/:userId",
+							"host": [
+								"{{server}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete non-existent user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{server}}:{{port}}/users/:userId",
+									"host": [
+										"{{server}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}:{{port}}/actuator/health",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -40,3 +40,7 @@
     ```bash
     open target/reports/pmd.html
     ```
+
+## Postman collection
+- Postman collection is available in the `api-test` directory.
+- Import environment and collections into Postman.
