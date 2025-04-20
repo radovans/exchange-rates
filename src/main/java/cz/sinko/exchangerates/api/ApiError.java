@@ -1,6 +1,6 @@
 package cz.sinko.exchangerates.api;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -17,13 +17,13 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Schema(description = "API error response")
 public class ApiError {
 
+    @Schema(description = "List of error messages")
     @NonNull
     private List<String> errors;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String stackTrace;
-
+    @Schema(description = "Time of the error", example = "2025-04-20T08:45:47.37513")
     private LocalDateTime timestamp = LocalDateTime.now();
 }

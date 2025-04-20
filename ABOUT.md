@@ -22,3 +22,10 @@ perform currency conversions. The application is built using Spring Boot and mos
 - User can update only selected fields (PATCH method).
 - Flyway for database migrations.
 - Logging into json. Separate log file for errors.
+- Swagger documentation for API endpoints.
+
+## API documentation
+- Swagger UI is available at `http://localhost:8080/swagger`.
+    ```bash
+    open http://localhost:8080/swagger
+    ```
