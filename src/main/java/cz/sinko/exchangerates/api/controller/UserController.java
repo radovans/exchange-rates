@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static cz.sinko.exchangerates.api.ApiUris.ROOT_URI_USERS;
+import static net.logstash.logback.marker.Markers.append;
 
 /**
  * Controller for User management.
@@ -72,7 +73,7 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(
             @RequestBody @Valid final UserCreateRequest userCreateRequest) throws AlreadyExistsException {
 
-        log.info("Call createUser with request '{}'", userCreateRequest);
+        log.info(append("request", userCreateRequest), "Call createUser with request '{}'", userCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 userApiMapper.toResponse(userFacade.createUser(userApiMapper.fromRequest(userCreateRequest))));
     }
@@ -111,7 +112,8 @@ public class UserController {
             @PathVariable final long id,
             @RequestBody @Valid final UserUpdateRequest userUpdateRequest) throws ResourceNotFoundException {
 
-        log.info("Call updateUser with id '{}' and request '{}'", id, userUpdateRequest);
+        log.info(append("request", userUpdateRequest),
+                "Call updateUser with id '{}' and request '{}'", id, userUpdateRequest);
         return ResponseEntity.ok().body(
                 userApiMapper.toResponse(
                         userFacade.updateUser(loggedUser, id, userApiMapper.fromRequest(userUpdateRequest))));

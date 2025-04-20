@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Request object for creating a new User.
@@ -14,6 +15,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@ToString(exclude = "password")
 public class UserCreateRequest {
 
     @NotBlank(message = "Name must not be blank")

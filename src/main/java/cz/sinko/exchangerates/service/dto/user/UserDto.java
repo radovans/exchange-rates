@@ -2,6 +2,7 @@ package cz.sinko.exchangerates.service.dto.user;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * DTO for User.
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@ToString(exclude = "password")
 public class UserDto {
 
     private Long id;

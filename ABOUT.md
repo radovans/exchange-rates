@@ -21,3 +21,4 @@ perform currency conversions. The application is built using Spring Boot and mos
 - @UniqueUsername validation for username.
 - User can update only selected fields (PATCH method).
 - Flyway for database migrations.
+- Logging into json. Separate log file for errors.

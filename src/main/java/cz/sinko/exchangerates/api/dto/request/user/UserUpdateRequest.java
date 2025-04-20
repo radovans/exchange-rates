@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Request object for updating existing User.
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@ToString(exclude = "password")
 public class UserUpdateRequest {
 
     @Size(max = 50, message = "Name must be at most 50 characters")
