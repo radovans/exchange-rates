@@ -3,6 +3,8 @@ package cz.sinko.exchangerates.configuration;
 import cz.sinko.exchangerates.api.ApiError;
 import cz.sinko.exchangerates.configuration.exception.AlreadyExistsException;
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
+import cz.sinko.exchangerates.integration.common.exception.SystemApiClientException;
+import cz.sinko.exchangerates.integration.common.exception.SystemApiServerException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,11 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException.class, HttpStatus.NOT_FOUND
     );
 
+    private static final Map<Class<? extends Exception>, HttpStatus> INTEGRATION_EXCEPTION_STATUS_MAP = Map.of(
+            SystemApiServerException.class, HttpStatus.INTERNAL_SERVER_ERROR,
+            SystemApiClientException.class, HttpStatus.BAD_REQUEST
+    );
+
     /**
      * Handles all exceptions that are not explicitly handled by other exception handlers.
      *
@@ -55,6 +62,30 @@ public class GlobalExceptionHandler {
         final HttpStatus status = EXCEPTION_STATUS_MAP.getOrDefault(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         log.error("Handling {} due to {}", ex.getClass().getSimpleName(), ex.getMessage());
+
+        final Function<Exception, List<String>> errorExtractor = getErrorExtractor(ex);
+        final List<String> errors = errorExtractor.apply(ex);
+
+        return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
+    }
+
+    /**
+     * Handles integration exceptions.
+     *
+     * @param ex      the exception
+     * @param request the web request
+     * @return the response entity with the error message
+     */
+    @ExceptionHandler({
+            SystemApiServerException.class,
+            SystemApiClientException.class
+    })
+    public final ResponseEntity<ApiError> handleIntegrationException(final Exception ex, final WebRequest request) {
+        final HttpHeaders headers = new HttpHeaders();
+        final HttpStatus status = INTEGRATION_EXCEPTION_STATUS_MAP.getOrDefault(ex.getClass(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+
+        log.error("Handling integration {} due to {}", ex.getClass().getSimpleName(), ex.getMessage());
 
         final Function<Exception, List<String>> errorExtractor = getErrorExtractor(ex);
         final List<String> errors = errorExtractor.apply(ex);

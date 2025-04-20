@@ -22,6 +22,8 @@ perform currency conversions. The application is built using Spring Boot and mos
 - User can update only selected fields (PATCH method).
 - Flyway for database migrations.
 - Logging into json. Separate log file for errors.
+- Each log contains traceId and requestId for tracking requests.
+- Integration calls are logged with request and response.
 - Swagger documentation for API endpoints.
 
 ## API documentation

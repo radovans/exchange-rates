@@ -1,4 +1,4 @@
-package cz.sinko.exchangerates.configuration;
+package cz.sinko.exchangerates.configuration.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
