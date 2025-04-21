@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres
+    container_name: exchange_rates_db
+    restart: always
+    ports:
+      - "5401:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: exchange_rates
+    volumes:
+      - exchange_rates_postgres_data:/var/lib/postgresql/data
+
+  status-page:
+    build:
+      context: ./status-page
+    container_name: status_page
+    ports:
+      - "8090:80"
+    restart: unless-stopped
+
+volumes:
+  exchange_rates_postgres_data:
