@@ -25,11 +25,18 @@ perform currency conversions. The application is built using Spring Boot and mos
 - Each log contains traceId and requestId for tracking requests.
 - Integration calls are logged with request and response.
 - Swagger documentation for API endpoints.
+- Redis caching for frequently accessed data.
 
 ## API documentation
 - Swagger UI is available at `http://localhost:8080/swagger`.
     ```bash
     open http://localhost:8080/swagger
+    ```
+
+## Redis
+- Redis Stack is available at `http://localhost:8001`
+    ```bash
+    open http://localhost:8001
     ```
 
 ## Build information and status page

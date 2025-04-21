@@ -1,6 +1,7 @@
 package cz.sinko.exchangerates.facade.impl;
 
 import cz.sinko.exchangerates.facade.ExchangeFacade;
+import cz.sinko.exchangerates.service.CacheService;
 import cz.sinko.exchangerates.service.ExchangeService;
 import cz.sinko.exchangerates.service.dto.exchangerates.CurrenciesDto;
 import cz.sinko.exchangerates.service.dto.exchangerates.ExchangeRatesDto;
@@ -22,12 +23,19 @@ import java.time.LocalDate;
 @Slf4j
 public class ExchangeFacadeImpl implements ExchangeFacade {
 
+    private static final String REDIS_KEY_PREFIX = "er-";
+
     private final ExchangeService exchangeService;
+
+    private final CacheService cacheService;
 
     @Override
     public ExchangeRatesDto getLatestRates(final String base, final String symbols, final BigDecimal amount) {
-        log.info("Getting latest rates for base '{}', symbols '{}', amount '{}'", base, symbols, amount);
-        return exchangeService.getLatestRates(base, symbols, amount);
+        return cacheService.getCachedDataOrSave(
+                REDIS_KEY_PREFIX + "latestRates-" + base + "-" + symbols + "-" + amount,
+                () -> exchangeService.getLatestRates(base, symbols, amount),
+                ExchangeRatesDto.class
+        );
     }
 
     @Override
@@ -36,8 +44,11 @@ public class ExchangeFacadeImpl implements ExchangeFacade {
                                             final String symbols,
                                             final BigDecimal amount) {
 
-        log.info("Getting rates for date '{}', base '{}', symbols '{}', amount '{}'", date, base, symbols, amount);
-        return exchangeService.getRatesForDate(date, base, symbols, amount);
+        return cacheService.getCachedDataOrSave(
+                REDIS_KEY_PREFIX + "ratesForDate-" + date + "-" + base + "-" + symbols + "-" + amount,
+                () -> exchangeService.getRatesForDate(date, base, symbols, amount),
+                ExchangeRatesDto.class
+        );
     }
 
     @Override
@@ -47,14 +58,21 @@ public class ExchangeFacadeImpl implements ExchangeFacade {
                                                         final String symbols,
                                                         final BigDecimal amount) {
 
-        log.info("Getting time series rates for start date '{}', end date '{}', base '{}', symbols '{}', amount '{}'",
-                startDate, endDate, base, symbols, amount);
-        return exchangeService.getTimeSeriesRates(startDate, endDate, base, symbols, amount);
+        return cacheService.getCachedDataOrSave(
+                REDIS_KEY_PREFIX + "timeSeriesRates-"
+                        + startDate + "-" + endDate + "-" + base + "-" + symbols + "-" + amount,
+                () -> exchangeService.getTimeSeriesRates(startDate, endDate, base, symbols, amount),
+                TimeSeriesExchangeRateDto.class
+        );
     }
 
     @Override
     public CurrenciesDto getSupportedCurrencies() {
-        log.info("Getting supported currencies");
-        return exchangeService.getSupportedCurrencies();
+        return cacheService.getCachedDataOrSaveWithTtl(
+                REDIS_KEY_PREFIX + "supportedCurrencies",
+                exchangeService::getSupportedCurrencies,
+                CurrenciesDto.class,
+                600L
+        );
     }
 }

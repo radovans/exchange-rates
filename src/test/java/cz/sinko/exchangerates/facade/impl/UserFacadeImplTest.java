@@ -2,6 +2,7 @@ package cz.sinko.exchangerates.facade.impl;
 
 import cz.sinko.exchangerates.configuration.exception.AlreadyExistsException;
 import cz.sinko.exchangerates.configuration.exception.ResourceNotFoundException;
+import cz.sinko.exchangerates.facade.UserFacade;
 import cz.sinko.exchangerates.repository.entity.Role;
 import cz.sinko.exchangerates.repository.entity.User;
 import cz.sinko.exchangerates.service.RoleService;
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Test class for {@link UserFacadeImpl}
+ * Implementation of {@link UserFacade}
  *
  * @author Radovan Šinko
  */
