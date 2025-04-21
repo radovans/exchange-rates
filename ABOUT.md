@@ -48,4 +48,16 @@ perform currency conversions. The application is built using Spring Boot and mos
     ```bash
     open status-page/status-page.html
     ```
+  or 
+    ```bash
+    open http://localhost:8090/status
+    ```
 - Metrics are available in raw form at `http://localhost:8080/actuator/metrics` (Prometheus)
+
+## Unleash
+- Unleash is available at `http://localhost:4242/`
+    ```bash
+    open http://localhost:4242/
+    ```
+- admin
+- unleash4all

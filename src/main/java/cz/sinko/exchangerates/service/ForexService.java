@@ -7,5 +7,10 @@ package cz.sinko.exchangerates.service;
  */
 public interface ForexService {
 
+    /**
+     * Predict exchange rate
+     *
+     * @return prediction
+     */
     String predict();
 }

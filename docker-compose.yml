@@ -28,5 +28,35 @@ services:
       - "6379:6379"
       - "8001:8001"
 
+  unleash_postgres:
+    image: postgres
+    container_name: unleash_db
+    restart: always
+    environment:
+      POSTGRES_USER: uuser
+      POSTGRES_PASSWORD: upassword
+      POSTGRES_DB: udb
+    volumes:
+      - unleash_postgres_data:/var/lib/postgresql/data
+    networks:
+      - default
+
+  unleash:
+    image: unleashorg/unleash-server:latest
+    container_name: unleash
+    restart: always
+    environment:
+      - DATABASE_URL=postgres://uuser:upassword@unleash_postgres/udb?sslmode=disable
+      - UNLEASH_HOST=http://localhost:4242
+      - FEATURE_TOGGLE_API_URL=http://localhost:4242/api
+    ports:
+      - "4242:4242"
+    depends_on:
+      - unleash_postgres
+    networks:
+      - default
+
 volumes:
   exchange_rates_postgres_data:
+  unleash_postgres_data:
+    
