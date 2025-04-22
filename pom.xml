@@ -20,6 +20,7 @@
         <flyway.version>11.7.0</flyway.version>
         <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <spring-ai.version>1.0.0-M7</spring-ai.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.8.6</springdoc-openapi-starter-webmvc-ui.version>
 
         <!-- Code style -->
@@ -157,7 +158,23 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-openai</artifactId>
+        </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

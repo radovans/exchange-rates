@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .DS_Store
 logs/
+application-secrets.properties
 
 ### STS ###
 .apt_generated
